@@ -3,18 +3,20 @@
 #include "placeholders.hpp"
 #include "additional_placeholders.hpp"
 
+struct ignore
+{
+  template<typename... U>
+  ignore(U&&...)
+  {};
+};
+
 struct printer
 {
-  void operator()()
+  template<typename... Ts>
+  void operator()(const Ts&... ts)
   {
+    ignore{(std::cout << ts << " ", 0)...};
     std::cout << std::endl;
-  }
-
-  template<typename T, typename... Ts>
-  void operator()(const T& t, const Ts&... ts)
-  {
-    std::cout << t << " " << std::flush;
-    operator()(ts...);
   }
 };
 
@@ -66,12 +68,12 @@ int main()
   std::cout << std::endl << "Placeholders tests: " << std::endl;
   functional::bind(printer{}, _all)(10);
   functional::bind(printer{}, _all)(10, 20, 30, 40);
-  functional::bind(printer{}, _from<1>())(10, 20, 30, 40);
-  functional::bind(printer{}, _from<2>())(10, 20, 30, 40);
-  functional::bind(printer{}, _from<3>())(10, 20, 30, 40);
-  functional::bind(printer{}, _from<4>())(10, 20, 30, 40);
-  functional::bind(printer{}, _from<5>())(10, 20, 30, 40);
-  functional::bind(printer{}, 1, 2, _all, _4, _3, _from<2>())(10, 20, 30, 40);
+  functional::bind(printer{}, _from<1>)(10, 20, 30, 40);
+  functional::bind(printer{}, _from<2>)(10, 20, 30, 40);
+  functional::bind(printer{}, _from<3>)(10, 20, 30, 40);
+  functional::bind(printer{}, _from<4>)(10, 20, 30, 40);
+  functional::bind(printer{}, _from<5>)(10, 20, 30, 40);
+  functional::bind(printer{}, 1, 2, _all, _4, _3, _from<2>)(10, 20, 30, 40);
 
   std::cout << std::endl << "Reference test:" << std::endl;
   int a = 0;
@@ -88,7 +90,7 @@ int main()
   forwardFunctor(1);
 
   std::cout << std::endl << "Bind test: " << std::endl;
-  functional::bind(printer{}, std::bind(functor{}, _1, _2), functional::bind(functor{}, _from<3>{}))(10, 20, 30, 40);
+  functional::bind(printer{}, std::bind(functor{}, _1, _2), functional::bind(functor{}, _from<3>))(10, 20, 30, 40);
 
   std::cout << std::endl << "Test const functor" << std::endl;
   auto normalFunctor = functional::bind(forward_tester{}, 1);
@@ -98,5 +100,5 @@ int main()
 
 
   std::cout << std::endl << "Additional (not proposed) placeholders tests: " << std::endl;
-  functional::bind(printer{}, _between<2,3>())(10, 20, 30, 40);
+  functional::bind(printer{}, _between<2,3>)(10, 20, 30, 40);
 }

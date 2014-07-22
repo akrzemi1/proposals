@@ -19,7 +19,7 @@ namespace functional
     //Should be variable template
     //But gcc 4.8.1 does not support it
     template<int B, int E>
-    using _between = between_placeholder<B, E>;
+    constexpr between_placeholder<B, E> _between{};
   }
 
   template<int B, int E>

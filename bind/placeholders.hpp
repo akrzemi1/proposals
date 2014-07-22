@@ -19,12 +19,10 @@ namespace functional
   {
     using namespace std::placeholders;
 
-    all_placeholder _all;
+    constexpr all_placeholder _all{};
 
-    //Should be variable template
-    //But gcc 4.8.1 does not support it
     template<int N>
-    using _from = from_placeholder<N>;
+    constexpr from_placeholder<N> _from{};
   }
 
   template<>
