@@ -6,8 +6,7 @@
 struct ignore
 {
   template<typename... U>
-  ignore(U&&...)
-  {};
+  ignore(U&&...) {}
 };
 
 struct printer
