@@ -63,7 +63,7 @@ td { text-align: left; vertical-align: top;
   padding-right: 0.4em; border: none; }
 </style>
 
-<title>Comments on P0119R0: Overload sets as function arguments</title>
+<title>Comments on P0119R0 (Overload sets as function arguments)</title>
 </head>
 
 <body>
@@ -83,21 +83,24 @@ td { text-align: left; vertical-align: top;
   </tr>
 </tbody></table>
 
-<h1><a name="title">Comments on P0119R0: Overload sets as function arguments</a></h1>
+<h1><a name="title">Comments on P0119R0 (Overload sets as function arguments)</a></h1>
 
 <h2><a name="intro">Introduction</a></h2>
 
-<p>The aim of this paper is to present the authors comments on the impact of the change proposed in 
-<a href="http://www.open-std.org/jtc1/sc22/wg21/docs/papers/2015/p0119r0.pdf">P0119R0: Overload sets as function arguments</a>.
-At the begin I would like to qualify that I see a great need for a language level feature that would allow programmers
-to easily create an lambda expression that wrap polymorphic calls to function with given name.</p>
+<p>The aim of this paper is to discuss the impact of the change proposed in 
+<a href="http://www.open-std.org/jtc1/sc22/wg21/docs/papers/2015/p0119r0.pdf">P0119R0</a> ("Overload sets as function arguments").
+The said proposal consists of three parts:<p>
 
-<p>Observations and comments gathered in this paper are related to only one of aspect of the feature that makes the compiler
-responsible for decision in which situation the lambda generation will actually be performed. As consequence all of 
-them would be voided by using the design that would allow programmer explicitly request the generation of the functor
-object. This may be achieved, for example by using <code>[]id-expression</code> syntax proposed in
-<a href="http://www.open-std.org/jtc1/sc22/wg21/docs/papers/2013/n3617.htm">N3617: Lifting overload sets into function objects</a>
-with keeping the same rules for functor generation.</p>
+<ol>
+<li>Acknowledging that we have a problem worth solving.</li>
+<li>Compiler determining where to trigger the different interpretation of <em>id-expression</em> based on the declarations seen so far at the point of parsing the template body.</em>
+<li>Describing how the <em>id-expression</em> is mapped onto a callable polymorphic function object.</li>
+</ol>
+
+<p>In this paper we strongly support parts 1 and 3, but question the design choice in 2.
+In exchange we propose the path taken in <a href="http://www.open-std.org/jtc1/sc22/wg21/docs/papers/2013/n3617.htm">N3617</a> ("Lifting overload sets into function objects"),
+where the programmer makes the call where the change of <em>id-expression</em> into a polymorphic lambda takes place.
+Additionally, we show how this change helps solve other problems not addressed by <a href="http://www.open-std.org/jtc1/sc22/wg21/docs/papers/2015/p0119r0.pdf">P0119R0</a>.</p>
 
 
 <!--h2><a name="toc">Table of contents</a></h2-->
